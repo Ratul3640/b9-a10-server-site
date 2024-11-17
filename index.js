@@ -43,17 +43,27 @@ async function run() {
 
         })
 
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+        // work 3 delete method
+        app.delete('/crafts/:id', async (req, res) => {
+            const id = req.params.id;
+            console.log('Delete id :', id)
+            const query = { _id: new ObjectId(id) };
+            const result = await craftsCollection.deleteOne(query);
+            res.send(result)
+        })
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+        // work 4 : craft details get method
+
+        app.get('/crafts/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await craftsCollection.findOne(query);
+            res.send(result)
+        })
 
 
 
-
+        // work 5: craft update
         app.put('/crafts/:id', async (req, res) => {
             const id = req.params.id;
             const updateCraft = req.body;
@@ -80,3 +90,20 @@ app.listen(port, () => {
 
 
         })
+
+        const CreativeExpressionCollection = client.db("assignment10DB").collection('CreativeExpressions');
+
+        app.get('/CreativeExpressions', async (req, res) => {
+            const cursor = CreativeExpressionCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+
+        })
+        app.get('/CreativeExpressions/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await CreativeExpressionCollection.findOne(query);
+            res.send(result)
+        })
+
+        const HandcraftedWondersCollection = client.db("assignment10DB").collection('HandcraftedWonders');
