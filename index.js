@@ -122,3 +122,19 @@ async function run() {
 
 
         const ArtisianDelightsCollection = client.db("assignment10DB").collection('ArtisianDelights');
+        app.get('/ArtisianDelights', async (req, res) => {
+            const cursor = ArtisianDelightsCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+
+        })
+
+        app.get('/ArtisianDelights/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await ArtisianDelightsCollection.findOne(query);
+            res.send(result)
+
+        })
+
+        const MasterpieceCollectionsCollection = client.db("assignment10DB").collection('MasterpieceCollections');
