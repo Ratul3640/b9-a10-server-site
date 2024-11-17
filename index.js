@@ -138,3 +138,28 @@ async function run() {
         })
 
         const MasterpieceCollectionsCollection = client.db("assignment10DB").collection('MasterpieceCollections');
+
+
+        app.get('/MasterpieceCollections', async (req, res) => {
+            const cursor = MasterpieceCollectionsCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+
+        })
+
+        app.get('/MasterpieceCollections/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await MasterpieceCollectionsCollection.findOne(query);
+            res.send(result)
+
+        })
+
+        const ArtisticTreasuresCollection = client.db("assignment10DB").collection('ArtisticTreasures');
+
+        app.get('/ArtisticTreasures', async (req, res) => {
+            const cursor = ArtisticTreasuresCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+
+        })
