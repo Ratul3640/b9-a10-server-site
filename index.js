@@ -50,3 +50,33 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+
+
+
+        app.put('/crafts/:id', async (req, res) => {
+            const id = req.params.id;
+            const updateCraft = req.body;
+            // console.log( updateCraft)
+            const filter = { _id: new ObjectId(id) };
+            const options = { upsert: true };
+            const craft = {
+                // {item_name, subcategory_Name, short_description, price, rating, customization, processing_time, stockStatus, image }
+                $set: {
+                    item_name: updateCraft.item_name,
+                    subcategory_Name: updateCraft.subcategory_Name,
+                    short_description: updateCraft.short_description,
+                    price: updateCraft.price,
+                    rating: updateCraft.rating,
+                    customization: updateCraft.customization,
+                    processing_time: updateCraft.processing_time,
+                    stockStatus: updateCraft.stockStatus,
+                    image: updateCraft.image,
+                }
+            }
+
+            const result = await craftsCollection.updateOne(filter, craft, options);
+            res.send(result)
+
+
+        })
