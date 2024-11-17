@@ -107,3 +107,18 @@ async function run() {
         })
 
         const HandcraftedWondersCollection = client.db("assignment10DB").collection('HandcraftedWonders');
+        app.get('/HandcraftedWonders', async (req, res) => {
+            const cursor = HandcraftedWondersCollection.find();
+            const result = await cursor.toArray();
+            res.send(result)
+
+        })
+        app.get('/HandcraftedWonders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) };
+            const result = await HandcraftedWondersCollection.findOne(query);
+            res.send(result)
+        })
+
+
+        const ArtisianDelightsCollection = client.db("assignment10DB").collection('ArtisianDelights');
